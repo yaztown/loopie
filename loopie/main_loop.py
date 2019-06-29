@@ -76,12 +76,12 @@ class MainLoop(BaseThread):
         self.httpd = WSThread(flask_app, name='wsgiserver')
         self.httpd.start()
     
-    def _setup_loop(self):
+    def setup_loop(self):
         self._setup_system()
         self.start_threads()
         self.start_wsgiserver()
 
-    def __loop__(self):
+    def loop_logic(self):
         sleep(2)
     
     def stop_wsgiserver(self):

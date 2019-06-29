@@ -5,11 +5,11 @@ Created on Tuesday 03/07/2018
 '''
 
 from time import sleep
-from hgc import MainLoop, load_settings_from_file #, HGC_SETTINGS, HGC_SETTINGS_TEST
-from base_threads import register_exit_signal_handler, ThreadExitException
+from loopie import MainLoop, load_settings_from_file #, HGC_SETTINGS, HGC_SETTINGS_TEST
+from loopie.core.base_threads import register_exit_signal_handler, ThreadExitException
 
-import hgc_logging
-logger = hgc_logging.get_logger()
+from loopie.logging import get_logger
+logger = get_logger()
 
 def main():
     settings = load_settings_from_file('settings/hgc_settings_minimal.json')
