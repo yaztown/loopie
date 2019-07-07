@@ -6,7 +6,7 @@ Created on Tuesday 03/07/2018
 
 # from datetime import time, timedelta
 
-import json
+# import json
 from loopie.core.json import loads
 
 def load_settings_from_file(filename='settings/loopie_settings.json'):
