@@ -13,3 +13,5 @@ weather_data*.txt
 venv/
 .pytest_cache/
 *.egg*
+.project
+.pydevproject
