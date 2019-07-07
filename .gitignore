@@ -12,3 +12,4 @@ weather_data*.txt
 !**/.gitkeep
 venv/
 .pytest_cache/
+*.egg*
