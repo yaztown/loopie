@@ -14,9 +14,12 @@ from time import sleep
 from loopie.core.metaclasses import MetaInstanceRegistry
 from loopie.logging import get_logger
 
+from loopie.net import flask_app
+from loopie.net.wsgiserver import WSThread
+
 import threading
 
-DEFAULT_SLEEP_TIME = 2
+DEFAULT_SLEEP_TIME = 1 #second(s)
 
 logger = get_logger()
 
@@ -78,6 +81,7 @@ class LoopingThread(threading.Thread, metaclass=MetaInstanceRegistry):
         raise NotImplementedError('must implement in subclasses')
     
     # This thread's control methods
+    
     def run(self):
         logger.debug('Starting run() on thread: {}'.format(self.name))
         self.setup_loop()
@@ -144,7 +148,7 @@ class LoopingThread(threading.Thread, metaclass=MetaInstanceRegistry):
         When overloading, make sure to call the super().clean_up()
         at the end of the implementation.
         '''
-        pass
+        raise NotImplementedError('must implement in subclasses')
     
     @classmethod
     def _get_instances(cls, recursive=True):
@@ -183,86 +187,3 @@ class LoopingThread(threading.Thread, metaclass=MetaInstanceRegistry):
             '_paused': self._paused.is_set(),
             '_is_stopped': self._is_stopped,
         }
-
-
-class MainLoop(LoopingThread):
-    def __init__(self, setup_object={}, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-#         _ = MyGPIO()
-#         self.sensors = []
-#         self.controllers = []
-#         self.setup_object = setup_object.copy()
-        self.httpd = None
-        logger.debug('Initialized {}'.format(self.name))
-    
-#     def _setup_system(self):
-#         self._setup_sensors()
-#         self._setup_controllers()
-#     
-#     def _setup_sensors(self):
-#         sensors_setup = self.setup_object.get('sensors', []).copy()
-#         for sensor_setup in sensors_setup:
-#             SensorClass = None
-#             sensor = None
-#             class_name = sensor_setup.pop('class_name')
-#             if hasattr(sensors, class_name):
-#                 SensorClass = getattr(sensors, class_name)
-#             
-#             if SensorClass is not None:
-#                 sensor = SensorClass(**sensor_setup)
-#                 self.sensors.append(sensor)
-#     
-#     def _setup_controllers(self):
-#         controllers_setup = self.setup_object.get('controllers', []).copy()
-#         for controller_setup in controllers_setup:
-#             ControllerClass = None
-#             controller = None
-#             class_name = controller_setup.pop('class_name')
-#             
-#             if hasattr(controllers, class_name):
-#                 ControllerClass = getattr(controllers, class_name)
-#             
-#             if ControllerClass is not None:
-#                 controller = ControllerClass(**controller_setup)
-#                 self.controllers.append(controller)
-    
-#     def start_threads(self):
-#         for sensor in self.sensors:
-#             sensor.start()
-#         sleep(3)
-#         for controller in self.controllers:
-#             controller.start()
-#     
-#     def start_wsgiserver(self):
-#         self.httpd = WSThread(flask_app, name='wsgiserver')
-#         self.httpd.start()
-#     
-    def loop_setup(self):
-#         self._setup_system()
-#         self.start_threads()
-        self.start_wsgiserver()
-#         raise NotImplementedError('must implement in subclasses')
-
-    def loop_logic(self):
-        pass
-#         raise NotImplementedError('must implement in subclasses')
-        
-    def stop_wsgiserver(self):
-        self.httpd.stop()
-     
-    def stop_threads(self):
-        self.stop_wsgiserver()
-#         for controller in self.controllers:
-#             controller.stop()
-#             controller.join()
-#         for sensor in self.sensors:
-#             sensor.stop()
-#             sensor.join()
-#         raise NotImplementedError('must implement in subclasses')
-    
-#     def clean_up(self):
-#         self.stop_threads()
-#         super().clean_up()
-        
-#     def get_status(self):
-#         pass

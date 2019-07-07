@@ -6,7 +6,7 @@ Created on Saturday 01/06/2019
 
 from flask import Flask, request
 from flask_cors import CORS
-from hgc_logging import get_logger
+from loopie.logging import get_logger
 import os
 from flask_jsonrpc import JSONRPC
 
@@ -60,15 +60,15 @@ flask_json_rpc = JSONRPC(flask_app, '/jsonrpc', enable_web_browsable_api=True)
 '''
 Standard Response objects
 '''
-def HGCResponse(success=True, success_msg='', err_msg='', err_code=0, rpc_ret_value=None):
-    return dict(
-        status='Success' if success else 'Error',
-        success_msg=success_msg,
-        err_msg=err_msg, err_code=err_code,
-        rpc_ret_value=rpc_ret_value)
-
-def ResponseSuccess(success_msg='', rpc_ret_value=None):
-    return HGCResponse(success_msg=success_msg, rpc_ret_value=rpc_ret_value)
-
-def ResponseError(err_msg='', err_code=-1, rpc_ret_value=None):
-    return HGCResponse(success=False, err_msg=err_msg, err_code=err_code, rpc_ret_value=rpc_ret_value)
+# def HGCResponse(success=True, success_msg='', err_msg='', err_code=0, rpc_ret_value=None):
+#     return dict(
+#         status='Success' if success else 'Error',
+#         success_msg=success_msg,
+#         err_msg=err_msg, err_code=err_code,
+#         rpc_ret_value=rpc_ret_value)
+# 
+# def ResponseSuccess(success_msg='', rpc_ret_value=None):
+#     return HGCResponse(success_msg=success_msg, rpc_ret_value=rpc_ret_value)
+# 
+# def ResponseError(err_msg='', err_code=-1, rpc_ret_value=None):
+#     return HGCResponse(success=False, err_msg=err_msg, err_code=err_code, rpc_ret_value=rpc_ret_value)

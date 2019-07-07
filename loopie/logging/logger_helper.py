@@ -4,7 +4,7 @@ Created on Saturday 25/05/2019
 @author: yaztown
 '''
 
-from hgc_logging import format_strings
+from loopie.logging import format_strings
 
 import logging
 import os
@@ -12,7 +12,7 @@ app_dirname, _ = os.path.split(os.path.dirname(os.path.abspath(__file__)))
 default_log_dirname = os.path.join(app_dirname, 'log')
 
 
-default_file_name='hgc.log'
+default_file_name='loopie.log'
 
 
 def get_console_handler(level=logging.DEBUG):
@@ -36,23 +36,23 @@ def get_file_handler(level=logging.DEBUG, log_dir=None, log_file=None):
     hdl_file.setFormatter(formatter_debug)
     return hdl_file
 
-def get_logger(name='hgc', level=logging.DEBUG, log_dir=None, log_file=None):
+def get_logger(name='loopie', level=logging.DEBUG, log_dir=None, log_file=None):
     # Create a custom logger
     logger = logging.getLogger(name)
     logger.setLevel(level)
     # Add handlers to the logger
     if not logger.hasHandlers():
         logger.addHandler(get_console_handler(level))
-        logger.addHandler(get_file_handler(level, log_dir, log_file))
+#         logger.addHandler(get_file_handler(level, log_dir, log_file))
     return logger
 
 
 # example
-if __name__ == '__main__':
-    logger = get_logger('logger_helper')
-    
-    logger.debug('This is a debug')
-    logger.info('This is an info')
-    logger.warning('This is a warning')
-    logger.error('This is an error')
-    logger.critical('This is critical')
+# if __name__ == '__main__':
+#     logger = get_logger('logger_helper')
+#     
+#     logger.debug('This is a debug')
+#     logger.info('This is an info')
+#     logger.warning('This is a warning')
+#     logger.error('This is an error')
+#     logger.critical('This is critical')
