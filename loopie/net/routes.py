@@ -5,9 +5,9 @@ Created on Saturday 01/06/2019
 '''
 
 from flask import send_from_directory#, request, redirect, url_for
-from hgc_net import flask_app
+from loopie.net import flask_app
 
-from . import api_routes
+# from . import api_routes
 
 
 @flask_app.route('/')

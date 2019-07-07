@@ -5,7 +5,7 @@ Created on Thursday 06/06/2019
 '''
 import threading
 import wsgiserver
-from hgc_logging import get_logger as getLogger
+from loopie.logging import get_logger as getLogger
 
 logger = getLogger()
 

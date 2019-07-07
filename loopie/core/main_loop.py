@@ -11,6 +11,7 @@ logger = get_logger()
 
 from loopie.net import flask_app
 from loopie.net.wsgiserver import WSThread
+from loopie.net import routes
 
 from loopie.core.base_threads.base_threads import LoopingThread
 
@@ -20,6 +21,7 @@ class MainLoop(LoopingThread):
         super().__init__(*args, **kwargs)
 #         _ = MyGPIO()
 #         self.setup_object = setup_object.copy()
+        self.name = 'main_loop'
         self.httpd = None
         logger.debug('Initialized {}'.format(self.name))
     
@@ -43,7 +45,7 @@ class MainLoop(LoopingThread):
     def loop_setup(self):
 #         self._setup_mainloop()
 #         self.start_sub_threads()
-        self.start_wsgiserver()
+        self.start_server()
 #         raise NotImplementedError('must implement in subclasses')
 
     def loop_logic(self):

@@ -14,8 +14,8 @@ from time import sleep
 from loopie.core.metaclasses import MetaInstanceRegistry
 from loopie.logging import get_logger
 
-from loopie.net import flask_app
-from loopie.net.wsgiserver import WSThread
+# from loopie.net import flask_app
+# from loopie.net.wsgiserver import WSThread
 
 import threading
 
@@ -84,7 +84,7 @@ class LoopingThread(threading.Thread, metaclass=MetaInstanceRegistry):
     
     def run(self):
         logger.debug('Starting run() on thread: {}'.format(self.name))
-        self.setup_loop()
+        self.loop_setup()
         while not self._exit_loop.is_set():
             with self._pause_condition:
                 # TODO: Can I change this while to if?!
