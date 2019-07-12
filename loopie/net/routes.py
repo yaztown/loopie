@@ -5,19 +5,20 @@ Created on Saturday 01/06/2019
 '''
 
 from flask import send_from_directory#, request, redirect, url_for
-from loopie.net import flask_app
+from loopie.net.web_app import WebApp
 
+web_app = WebApp.getWebApp()
 # from . import api_routes
 
 
-@flask_app.route('/')
+@web_app.route('/')
 def index():
-    return flask_app.send_static_file('index.html')
+    return web_app.send_static_file('index.html')
 
 
-@flask_app.route('/<path:path>')
+@web_app.route('/<path:path>')
 def send_file(path):
-    return send_from_directory(flask_app.static_folder, path)
+    return send_from_directory(web_app.static_folder, path)
 
 
 
