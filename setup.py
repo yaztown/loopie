@@ -13,7 +13,7 @@ setup(
 		download_url = 'https://github.com/yaztown/loopie/archive/v_0_1.tar.gz',
 		keywords = ['loopie', 'looping', 'mainloop', 'thread', 'threading', 'Pi', 'Raspberry Pi', 'RPi'],
 		classifiers=[
-		    'Development Status :: 3 - Alpha',
+		    'Development Status :: 5 - Production/Stable',
 		    'Intended Audience :: Developers',
 		    'Topic :: Software Development :: Build Tools',
 		    'License :: OSI Approved :: GPLv3 License',
