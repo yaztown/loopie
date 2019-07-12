@@ -10,7 +10,7 @@ setup(
 		author='Yaztown',
 		author_email='yaztown@gmail.com',
 		url='https://github.com/yaztown/loopie',
-		download_url = 'https://github.com/yaztown/loopie/archive/v_0_1.tar.gz',
+		download_url = 'https://github.com/yaztown/loopie/archive/loopie_v0.1.tar.gz',
 		keywords = ['loopie', 'looping', 'mainloop', 'thread', 'threading', 'Pi', 'Raspberry Pi', 'RPi'],
 		classifiers=[
 		    'Development Status :: 5 - Production/Stable',
