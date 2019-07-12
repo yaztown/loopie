@@ -9,20 +9,42 @@ file: base_threads.py
 from loopie.logging import get_logger
 logger = get_logger()
 
-from loopie.net import flask_app
+from loopie.net.web_app import WebApp
 from loopie.net.wsgiserver import WSThread
-from loopie.net import routes
+# from loopie.net import routes
 
 from loopie.core.base_threads.base_threads import LoopingThread
 
 
 class MainLoop(LoopingThread):
-    def __init__(self, setup_object={}, *args, **kwargs):
+    def __init__(self,
+                 enable_http_server=True,
+                 wsgi_app=None,
+                 server_host='0.0.0.0',
+                 server_port=8000,
+                 server_name=None,
+                 server_root_dir='www',
+                 json_rpc_service_url='/jsonrpc',
+                 enable_web_browsable_api=False,
+                 *args, **kwargs):
         super().__init__(*args, **kwargs)
-#         _ = MyGPIO()
-#         self.setup_object = setup_object.copy()
+        
         self.name = 'main_loop'
+        
         self.httpd = None
+        
+        self.enable_http_server = enable_http_server
+        self.wsgi_app = wsgi_app
+        self.server_host = server_host
+        self.server_port = server_port
+        self.server_name = '{}_server'.format(self.name) if not server_name else server_name
+        self.server_root_dir = server_root_dir
+        self.json_rpc_service_url = json_rpc_service_url
+        self.enable_web_browsable_api = enable_web_browsable_api
+        
+        self.web_app = self._create_web_app()
+        self.json_rpc = self._create_json_rpc()
+        
         logger.debug('Initialized {}'.format(self.name))
     
 #     def _setup_mainloop(self):
@@ -35,8 +57,14 @@ class MainLoop(LoopingThread):
 #         for controller in self.controllers:
 #             controller.start()
 #     
+    def _create_web_app(self):
+        return WebApp.getWebApp(www_folder=self.server_root_dir, enable_cors=True)
+    
+    def _create_json_rpc(self):
+        return WebApp.getJsonRpc(web_app=self.web_app, service_url=self.json_rpc_service_url, enable_web_browsable_api=self.enable_web_browsable_api)
+
     def _start_wsgiserver(self):
-        self.httpd = WSThread(flask_app, name='wsgiserver')
+        self.httpd = WSThread(self.web_app, host=self.server_host, port=self.server_port, server_name=self.server_name, name='server_thread')
         self.httpd.start()
     
     def start_server(self):
@@ -45,7 +73,8 @@ class MainLoop(LoopingThread):
     def loop_setup(self):
 #         self._setup_mainloop()
 #         self.start_sub_threads()
-        self.start_server()
+        if self.enable_http_server:
+            self.start_server()
 #         raise NotImplementedError('must implement in subclasses')
 
     def loop_logic(self):
