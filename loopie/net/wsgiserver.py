@@ -11,7 +11,7 @@ logger = getLogger()
 
 class WSThread(threading.Thread):
     def __init__(self, wsgi_app, host='0.0.0.0', port=8000, numthreads=10,
-                 server_name='hgc_server', threadpool_max=-1, request_queue_size=5, timeout=10,
+                 server_name='wsgi_server', threadpool_max=-1, request_queue_size=5, timeout=10,
                  shutdown_timeout=5, accepted_queue_size=-1,
                  accepted_queue_timeout=10, certfile=None, keyfile=None,
                  ca_certs=None,
