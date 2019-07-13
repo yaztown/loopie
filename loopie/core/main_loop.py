@@ -11,7 +11,6 @@ logger = get_logger()
 
 from loopie.net.web_app import WebApp
 from loopie.net.wsgiserver import WSThread
-# from loopie.net import routes
 
 from loopie.core.base_threads.base_threads import LoopingThread
 
@@ -24,7 +23,7 @@ class MainLoop(LoopingThread):
                  server_port=8000,
                  server_name=None,
                  server_root_dir='www',
-                 json_rpc_service_url='/jsonrpc',
+                 json_rpc_service_url='/api',
                  enable_web_browsable_api=False,
                  *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -46,6 +45,9 @@ class MainLoop(LoopingThread):
         self.json_rpc = self._create_json_rpc()
         
         logger.debug('Initialized {}'.format(self.name))
+    
+    def importRoutes(self):
+        from loopie.net import routes
     
 #     def _setup_mainloop(self):
 #         pass
