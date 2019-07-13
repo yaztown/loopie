@@ -27,7 +27,14 @@ setup(
 #                   'loopie.net',
 #         ],
         packages=find_packages(),
-		version='0.2.2',
+        include_package_data=True,
+#         package_data={
+#             # If any package contains *.txt files, include them:
+#             '': ['www/*'],
+#             # And include any *.dat files found in the 'data' subdirectory
+#             # of the 'mypkg' package, also:
+#         },
+		version='0.2.3',
 		license="GPLv3",
 		description='A simple python framework for creating a looping application (Service).',
 		long_description=README,
@@ -36,7 +43,7 @@ setup(
 		author='Yaztown',
 		author_email='yaztown@gmail.com',
 		url='https://github.com/yaztown/loopie',
-		download_url='https://github.com/yaztown/loopie/archive/v0.2.2.tar.gz',
+		download_url='https://github.com/yaztown/loopie/archive/v0.2.3.tar.gz',
 		keywords=['loopie', 'loop', 'looping', 'mainloop', 'thread', 'threading', 'Pi', 'Raspberry Pi', 'RPi'],
 		install_requires=[
 	        'flask',
@@ -45,7 +52,8 @@ setup(
 	        'wsgiserver',
 	        'pytz',
       	],
-		classifiers=[
+		zip_safe=False,
+        classifiers=[
 		    'Development Status :: 5 - Production/Stable',
 		    'Intended Audience :: Developers',
 		    'Topic :: Software Development :: Build Tools',
