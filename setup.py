@@ -17,8 +17,12 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
 		name='loopie',
-		packages=['loopie'],
-		version='0.2',
+		packages=['loopie',
+                  'loopie.core',
+                  'loopie.logging',
+                  'loopie.net',
+        ],
+		version='0.2.1',
 		license="GPLv3",
 		description='A simple python framework for creating a looping application (Service).',
 		long_description=README,
@@ -27,7 +31,7 @@ setup(
 		author='Yaztown',
 		author_email='yaztown@gmail.com',
 		url='https://github.com/yaztown/loopie',
-		download_url='https://github.com/yaztown/loopie/archive/v0.2.tar.gz',
+		download_url='https://github.com/yaztown/loopie/archive/v0.2.1.tar.gz',
 		keywords=['loopie', 'loop', 'looping', 'mainloop', 'thread', 'threading', 'Pi', 'Raspberry Pi', 'RPi'],
 		install_requires=[
 	        'flask',
