@@ -6,7 +6,9 @@ The project is designed to create a commandline application to loop through a cu
 
 One of the main uses of this project is to create a startup script (systemd) on a Raspberry Pi 2/3 that will run your custom python application, for example, to interact with the GPIO pins from the very start of the Pi.
 
-To interact with the mainloop, the framework features a built-in WSGI application (which is based on [Flask](https://palletsprojects.com/p/flask/)) and a [wsgiserver](https://gitlab.com/fgallaire/wsgiserver) which act as a simple UI for the mainloop.  In addition, a JSON RPC ([Flask-JSONRPC](https://pypi.org/project/Flask-JSONRPC/)) service is added to the WSGI app to enable creating JSON APIs for your service.  This web server is enabled by default but can be disabled.  Additionally, you can use the included WSGI application to attach to any other server that supports WSGI.
+To interact with the mainloop, the framework features a built-in WSGI application (which is based on [Flask](https://palletsprojects.com/p/flask/)) and a [wsgiserver](https://gitlab.com/fgallaire/wsgiserver) which act as a simple UI for the mainloop at [http://localhost:8000/](http://localhost:8000/).  In addition, a JSON RPC ([Flask-JSONRPC](https://pypi.org/project/Flask-JSONRPC/)) service is added to the WSGI app to enable creating JSON APIs for your service.  By default, the url for the api service is preappend with [http://localhost:8000/api/](http://localhost:8000/api/) and include a browsable api page found here [http://localhost:8000/api/browse/](http://localhost:8000/api/browse/).
+
+This web server is enabled by default but can be disabled.  Additionally, you can use the included WSGI application to attach to any other server that supports WSGI.
 
 This package is written in Python 3.
 
@@ -36,14 +38,22 @@ class MyMain(loopie.MainLoop):
     def loop_logic(self):
         self.i += 1
         print(self.i)
+    
+    def importRoutes(self):
+        # You can override this method to import the route file or create your on url routes
+        super().importRoutes()
+        @self.web_app.route('/hello')
+        def hello(**kwargs):
+            return 'Hello from overridden importRoutes()'
 
 if __name__ == '__main__':
     main = MyMain(name='main', enable_web_browsable_api=True)
     app = loopie.Application(main)
+    main.importRoutes()
     
     @main.json_rpc.method('core.MyLoop(uuid=String) -> Object')
     def MyLoop(**kwargs):
-        uuid = kwargs.pop('uuid', None)
+        uuid = kwargs.pop('uuid', 'no uuid')
         return dict(app='loopie_test', status='running', i=main.i, uuid=uuid)
     
     app.start()
