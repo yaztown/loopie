@@ -6,5 +6,47 @@ The project is designed to create a commandline application to loop through a cu
 
 One of the main uses of this project is to create a startup script (systemd) on a Raspberry Pi 2/3 that will run your custom python application, for example, to interact with the GPIO pins from the very start of the Pi.
 
+To interact with the mainloop, the framework features a built-in WSGI application (which is based on [Flask](https://palletsprojects.com/p/flask/)) and a [wsgiserver](https://gitlab.com/fgallaire/wsgiserver) which act as a simple UI for the mainloop.  In addition, a JSON RPC ([Flask-JSONRPC](https://pypi.org/project/Flask-JSONRPC/)) service is added to the WSGI app to enable creating JSON APIs for your service.  This web server is enabled by default but can be disabled.  Additionally, you can use the included WSGI application to attach to any other server that supports WSGI.
 
-A dominent feature of the project is it's web interface.
+This package is written in Python 3.
+
+## Installation
+
+The best option to install is through `pip` by running the command:
+
+```
+pip install loopie
+```
+or
+
+```
+sudo pip install loopie
+```
+
+## Example
+
+```python
+import loopie
+
+class MyMain(loopie.MainLoop):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.i = 0
+    
+    def loop_logic(self):
+        self.i += 1
+        print(self.i)
+
+if __name__ == '__main__':
+    main = MyMain(name='main', enable_web_browsable_api=True)
+    app = loopie.Application(main)
+    
+    @main.json_rpc.method('core.MyLoop(uuid=String) -> Object')
+    def MyLoop(**kwargs):
+        uuid = kwargs.pop('uuid', None)
+        return dict(app='loopie_test', status='running', i=main.i, uuid=uuid)
+    
+    app.start()
+    print('application ended')
+
+```
