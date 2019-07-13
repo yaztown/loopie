@@ -4,7 +4,7 @@ Created on Saturday 13/07/2019
 @author: yaztown
 '''
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 import os
 
@@ -17,15 +17,16 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
 		name='loopie',
-		packages=['loopie',
-                  'loopie.core',
-                  'loopie.core.base_threads',
-                  'loopie.core.datetime',
-                  'loopie.core.json',
-                  'loopie.core.metaclasses',
-                  'loopie.logging',
-                  'loopie.net',
-        ],
+# 		packages=['loopie',
+#                   'loopie.core',
+#                   'loopie.core.base_threads',
+#                   'loopie.core.datetime',
+#                   'loopie.core.json',
+#                   'loopie.core.metaclasses',
+#                   'loopie.logging',
+#                   'loopie.net',
+#         ],
+        packages=find_packages(),
 		version='0.2.2',
 		license="GPLv3",
 		description='A simple python framework for creating a looping application (Service).',
