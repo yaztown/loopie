@@ -46,8 +46,11 @@ class MainLoop(LoopingThread):
         
         logger.debug('Initialized {}'.format(self.name))
     
-    def importRoutes(self):
+    def importDefaultRoutes(self):
         from loopie.net import routes
+    
+    def importRoutes(self):
+        self.importDefaultRoutes()
     
 #     def _setup_mainloop(self):
 #         pass
